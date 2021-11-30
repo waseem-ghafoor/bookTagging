@@ -1,0 +1,31 @@
+<h1>Tags#index</h1>
+<div class="row py-2 border-bottom mx-0">
+  <div class="col-sm-4">
+    <%= label_tag :price_id, 'Select Tags', class: 'text-light-black' %>
+    <%= select_tag "Tags", options_from_collection_for_select(Tag.all, "id", "name"), {:id =>"select_tag",:class => 'form-select'} %>
+  </div>
+</div>
+
+<div class="row py-2">
+  <div class="col-sm-8">
+    <table class="table">
+      <tbody>
+        <% Book.all.each do |book| %>
+            <tr>
+              <td>
+                <div class="form-check form-switch">
+                  <input class="form-check-input" type="checkbox" id="book_<%= book.id %>" data-book-id=<%= book.id %>>
+                  <label class="form-check-label" for="book_<%= book.id %>"><%= book.title %></label>
+                </div>
+              <td><%= book.price %></td>
+            </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+<%= form_with url: "/assign_tags", method: :get, local: true do |f| %>
+  <%= f.hidden_field :tag_id, value: Book.first.id %>
+  <%= f.hidden_field :book_ids, :multiple => true  %>
+  <%= f.submit %>
+<% end %>

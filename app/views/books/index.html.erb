@@ -1,0 +1,39 @@
+<h1>Books#index</h1>
+
+<div class="row py-2 border-bottom mx-0">
+  <div class="col-sm-2">
+    <%= label_tag :price_id, 'Select Price', class: 'text-light-black' %>
+    <%= select_tag "book_price_select", options_for_select(select_options_for_books, book_select_default_value ), {:id =>"selected_price",:class => 'form-select', :prompt => "All"} %>
+  </div>
+  <div class="col-sm-4">
+    <%= label_tag :tag_ids, 'Select Tags', class: 'text-light-black' %>
+    <%= select_tag "tag_select", options_for_select(select_options_for_tags, tag_select_default_value ), {:id =>"selected_tags",:class => 'form-select', :prompt => "All"} %>
+  </div>
+</div>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Id#</th>
+      <th>Description</th>
+      <th>Price</th>
+      <th>Tags</th>
+    </tr>
+  </thead>
+  <tbody>
+
+
+    <% @books.each do |book| %>
+      <tr>
+        <td><%= book.id %></td>
+        <td><%= book.description %></td>
+        <td><%= book.price %></td>
+        <td>
+          <% book_tags(book).each do |tag| %>
+            <span class="badge bg-secondary"><%= tag %></span>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
